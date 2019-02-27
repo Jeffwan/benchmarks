@@ -1208,7 +1208,7 @@ class LibrispeechPreprocessor(InputPreprocessor):
     else:
       ds = ds.repeat()
     ds = ds.map(map_func=self.parse_and_preprocess,
-                num_parallel_calls=batch_size_per_split*num_splits)
+                num_parallel_calls=(batch_size_per_split*num_splits) / 4)
     ds = ds.padded_batch(
         batch_size=batch_size_per_split,
         padded_shapes=tuple([
